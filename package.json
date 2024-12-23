@@ -1,0 +1,57 @@
+{
+	"name": "storystart",
+	"description": "A SvelteKit starter project using Bun, Storyblok and TailwindCSS",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/darbymanning/storystart.git"
+	},
+	"author": "Darby Manning <me@darbymanning.com>",
+	"license": "ISC",
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"bun",
+		"storyblok",
+		"tailwindcss"
+	],
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "bun generate && vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint .",
+		"generate": "bun ./scripts/generate.ts",
+		"setup": "bun ./scripts/setup.ts"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.2.4",
+		"@storyblok/svelte": "4.0.9",
+		"@sveltejs/adapter-cloudflare": "^4.9.0",
+		"@sveltejs/kit": "^2.15.0",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@tailwindcss/postcss": "^4.0.0-beta.8",
+		"@tailwindcss/typography": "^0.5.15",
+		"@types/bun": "1.1.14",
+		"@vitejs/plugin-basic-ssl": "1.2.0",
+		"bun-promptx": "0.2.0",
+		"eslint": "^9.17.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.46.1",
+		"globals": "^15.14.0",
+		"ora": "8.1.1",
+		"prettier": "^3.4.2",
+		"prettier-plugin-svelte": "^3.3.2",
+		"prettier-plugin-tailwindcss": "^0.6.9",
+		"storyblok-generate-ts": "2.1.0",
+		"svelte": "^5.15.0",
+		"svelte-check": "^4.1.1",
+		"tailwindcss": "^4.0.0-beta.8",
+		"typescript": "^5.7.2",
+		"typescript-eslint": "^8.18.1",
+		"vite": "^6.0.5"
+	}
+}
