@@ -2,13 +2,14 @@
 
 This is a starter template for SvelteKit with Storyblok. It includes a basic setup for a SvelteKit project with Storyblok as a headless CMS.
 
-This is a [SvelteKit](https://svelte.dev/docs/kit/introduction) application bootstrapped with [sv](https://svelte.dev/docs/kit/cli). There are some opinionated choices made in this starter template. Specifically, this starter template uses:
+This is a [SvelteKit](https://svelte.dev/docs/kit/introduction) application bootstrapped with [sv](https://svelte.dev/docs/kit/cli). There are some opinionated choices made in this starter template. Specifically:
 
 - [Bun](https://bun.sh)
 - [Tailwind v4 beta](https://tailwindcss.com/docs/v4-beta)
 - A generate script to create TypeScript types for Storyblok components
 - [@vitejs/plugin-basic-ssl](https://github.com/vitejs/vite-plugin-basic-ssl) for local development with HTTPS
 - A `storyblok.ts` file which provides snake_case exports (more Sveltey, extend as necessary)
+- The entire components folder imported to use as Storyblok components, so as long as the component name in Storyblok matches the filename, it will be loaded automatically
 
 ## Getting Started
 
