@@ -8,18 +8,26 @@
     "@storyblok/region-helper": "^1.1.0",
     "@types/bun": "latest",
     "@types/figlet": "^1.7.0",
+    "@types/pg": "^8.11.10",
     "bun-promptx": "^0.2.0",
     "chalk": "^5.4.1",
     "cookie": "^1.0.2",
+    "drizzle-kit": "^0.30.1",
     "figlet": "^1.8.0",
     "netrc": "^0.1.4",
     "neverthrow": "^8.1.1",
     "ora": "^8.1.1",
     "storyblok-generate-ts": "^2.1.0",
+    "tsx": "^4.19.2",
     "type-fest": "^4.31.0",
     "xior": "^0.6.1"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.3",
+    "pg": "^8.13.1"
   }
 }

@@ -238,6 +238,11 @@ type ComponentGroup = {
   parent_uuid: string
 }
 
+export type Components = {
+  components: Array<Component>
+  component_groups: Array<ComponentGroup>
+}
+
 class Api {
   public async get_user(init?: RequestInit): Promise<Result<{ user: User }, ApiError>> {
     return await content_api.get("/users/me", init)
@@ -266,15 +271,7 @@ class Api {
   public async get_components(
     space_id: number | string,
     init?: RequestInit
-  ): Promise<
-    Result<
-      {
-        components: Array<Component>
-        component_groups: Array<ComponentGroup>
-      },
-      ApiError
-    >
-  > {
+  ): Promise<Result<Components, ApiError>> {
     return await management_api.get(`/spaces/${space_id}/components`, init)
   }
 }

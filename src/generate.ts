@@ -1,16 +1,17 @@
 import storyblok_to_ts from "storyblok-generate-ts"
 import { err, ok, type Result } from "neverthrow"
+import { $ } from "bun"
 
 export async function generate_types({
   space_id,
-  data,
+  content,
 }: {
   space_id: string
-  data: unknown
+  content: unknown
 }): Promise<Result<string, unknown>> {
   try {
     const generated = await storyblok_to_ts({
-      componentsJson: data as never,
+      componentsJson: content as never,
       path: `${space_id}.ts`,
       compilerOptions: {
         additionalProperties: false,
@@ -23,6 +24,8 @@ export async function generate_types({
         },
       },
     }).then((arr) => arr.join("\n"))
+
+    await $`rm ${space_id}.ts`
 
     const header =
       `

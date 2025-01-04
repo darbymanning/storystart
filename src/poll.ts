@@ -1,6 +1,9 @@
 import { parse } from "cookie"
-import api from "./api"
+import api from "./api.js"
 import { generate_types } from "./generate"
+import { db } from "./db/index.js"
+import { spaces } from "./db/schema.js"
+import { eq } from "drizzle-orm"
 
 const server = Bun.serve<{
   space_id: string
@@ -18,25 +21,37 @@ const server = Bun.serve<{
       const { space_id, token } = ws.data
       const init = { headers: { Authorization: token } }
 
-      let previous_components = ""
+      const query = (
+        await db
+          .select()
+          .from(spaces)
+          .where(eq(spaces.id, Number(space_id)))
+          .limit(1)
+      )[0]
+
+      let previous_components: string = JSON.stringify(query?.content || "")
 
       async function generate() {
         const result = await api.get_components(space_id, init)
 
-        result.map(async (data) => {
+        result.map(async (content) => {
           // compare new data with previous components
+          if (JSON.stringify(content) === previous_components) return
 
-          if (JSON.stringify(data) === previous_components) return
+          await db
+            .insert(spaces)
+            .values({ id: Number(space_id), content })
+            .onConflictDoUpdate({ target: spaces.id, set: { content: content } })
 
           // update previous components
-          previous_components = JSON.stringify(data)
+          previous_components = JSON.stringify(content)
 
-          const result = await generate_types({ space_id, data })
+          const result = await generate_types({ space_id, content })
 
-          result.map((contents) => {
+          result.map(async (content) => {
             const msg = JSON.stringify({
               type: "type_generation",
-              contents,
+              content,
             })
             ws.send(msg)
           })
