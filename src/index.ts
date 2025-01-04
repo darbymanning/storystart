@@ -91,13 +91,15 @@ async function setup_vite_config() {
 }
 
 async function install_dependencies() {
+  // prettier-ignore
   const new_dependencies = new Map([
-    ["ora", "^8.1.1"],
-    ["@types/bun", "^1.1.14"],
-    ["@storyblok/svelte", "^4.0.10"],
-    ["storyblok-generate-ts", "^2.1.0"],
-    ["lodash", "^4.17.15"],
-    ["@vitejs/plugin-basic-ssl", "^1.2.0"],
+    ["ora",                       "^8.1.1"  ],
+    ["@types/bun",                "^1.1.14" ],
+    ["@storyblok/svelte",         "^4.0.10" ],
+    ["storyblok-generate-ts",     "^2.1.0"  ],
+    ["lodash",                    "^4.17.15"],
+    ["@vitejs/plugin-basic-ssl",  "^1.2.0"  ],
+    ["ws",                        "^8.18.0" ],
   ])
 
   const package_json = (await Bun.file("package.json").json()) as PackageJson
@@ -107,7 +109,7 @@ async function install_dependencies() {
   }
 
   for (const [name, version] of new_dependencies) {
-    if (!has_dependency(name)) await $`bun add ${name}@${version} -DE`.quiet()
+    if (!has_dependency(name)) await $`bun add ${name}@${version} -D`.quiet()
   }
 }
 
@@ -124,6 +126,7 @@ async function setup(space: Space) {
         .replaceAll("$SPACE_ID", space.id.toString())
         .replaceAll("$COMPONENTS_DIR", "/src/lib/components")
         .replaceAll("$LIBRARY_DIR", "$lib")
+        .replaceAll("$TOKEN", credentials!.token)
     )
   }
 

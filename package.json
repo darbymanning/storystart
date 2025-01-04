@@ -1,6 +1,7 @@
 {
   "name": "storystart",
   "module": "src/index.ts",
+  "main": "src/index.ts",
   "type": "module",
   "version": "2.0.0",
   "devDependencies": {
@@ -9,10 +10,12 @@
     "@types/figlet": "^1.7.0",
     "bun-promptx": "^0.2.0",
     "chalk": "^5.4.1",
+    "cookie": "^1.0.2",
     "figlet": "^1.8.0",
     "netrc": "^0.1.4",
     "neverthrow": "^8.1.1",
     "ora": "^8.1.1",
+    "storyblok-generate-ts": "^2.1.0",
     "type-fest": "^4.31.0",
     "xior": "^0.6.1"
   },

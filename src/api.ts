@@ -206,21 +206,76 @@ export type Space = {
   }[]
 }
 
+type Component = {
+  name: string
+  display_name: string | null
+  description: string | null
+  created_at: string
+  updated_at: string
+  id: number
+  schema: Record<string, unknown>
+  image: string | null
+  preview_field: string | null
+  is_root: boolean
+  preview_tmpl: string | null
+  is_nestable: boolean
+  all_presets: unknown[]
+  preset_id: string | null
+  real_name: string
+  component_group_uuid: string | null
+  color: string | null
+  icon: string | null
+  internal_tags_list: unknown[]
+  internal_tag_ids: unknown[]
+  content_type_asset_preview: string | null
+}
+
+type ComponentGroup = {
+  id: number
+  name: string
+  uuid: string
+  parent_id: number
+  parent_uuid: string
+}
+
 class Api {
-  public async get_user(): Promise<Result<{ user: User }, ApiError>> {
-    return await content_api.get("/users/me")
+  public async get_user(init?: RequestInit): Promise<Result<{ user: User }, ApiError>> {
+    return await content_api.get("/users/me", init)
   }
 
-  public async get_spaces(): Promise<Result<{ spaces: SpaceSummary[] }, ApiError>> {
-    return await management_api.get("/spaces")
+  public async get_spaces(
+    init?: RequestInit
+  ): Promise<Result<{ spaces: SpaceSummary[] }, ApiError>> {
+    return await management_api.get("/spaces", init)
   }
 
-  public async get_space(space_id: number): Promise<Result<{ space: Space }, ApiError>> {
-    return await management_api.get(`/spaces/${space_id}`)
+  public async get_space(
+    space_id: number | string,
+    init?: RequestInit
+  ): Promise<Result<{ space: Space }, ApiError>> {
+    return await management_api.get(`/spaces/${space_id}`, init)
   }
 
-  public async create_space(data: Partial<Space>): Promise<Result<{ space: Space }, ApiError>> {
-    return await management_api.post("/spaces", { body: JSON.stringify(data) })
+  public async create_space(
+    data: Partial<Space>,
+    init?: RequestInit
+  ): Promise<Result<{ space: Space }, ApiError>> {
+    return await management_api.post("/spaces", { ...init, body: JSON.stringify(data) })
+  }
+
+  public async get_components(
+    space_id: number | string,
+    init?: RequestInit
+  ): Promise<
+    Result<
+      {
+        components: Array<Component>
+        component_groups: Array<ComponentGroup>
+      },
+      ApiError
+    >
+  > {
+    return await management_api.get(`/spaces/${space_id}/components`, init)
   }
 }
 
