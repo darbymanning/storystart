@@ -93,11 +93,8 @@ async function setup_vite_config() {
 async function install_dependencies() {
   // prettier-ignore
   const new_dependencies = new Map([
-    ["ora",                       "^8.1.1"  ],
     ["@types/bun",                "^1.1.14" ],
     ["@storyblok/svelte",         "^4.0.10" ],
-    ["storyblok-generate-ts",     "^2.1.0"  ],
-    ["lodash",                    "^4.17.15"],
     ["@vitejs/plugin-basic-ssl",  "^1.2.0"  ],
     ["ws",                        "^8.18.0" ],
   ])
@@ -114,6 +111,7 @@ async function install_dependencies() {
 }
 
 async function setup(space: Space) {
+  spinner.start("Setting up project")
   await appendFile(".env.local", `PUBLIC_STORYBLOK_ACCESS_TOKEN="${space.first_token}"`)
 
   const files_path = `${import.meta.dirname}/files/`
@@ -136,7 +134,7 @@ async function setup(space: Space) {
   await $`open raycast://confetti`.nothrow().quiet()
 
   console.log("")
-  console.log("🚀 Setup complete!\n")
+  spinner.succeed("🚀 Project setup complete")
 
   process.exit(0)
 }

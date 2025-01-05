@@ -12,7 +12,13 @@ function echo(text: string) {
   console.log("\x1b[33m[vite-regenerate-storyblok-types]\x1b[0m " + text)
 }
 
-socket.addEventListener("open", () => echo("🔌 Listening for Storyblok component changes..."))
+socket.addEventListener("open", () => {
+  echo("🔌 Listening for Storyblok component changes")
+
+  fs.access(".$COMPONENTS_DIR/types.ts", fs.constants.F_OK).catch(() =>
+    socket.send(JSON.stringify({ type: "request_type_generation" }))
+  )
+})
 
 socket.addEventListener("message", (msg) => {
   if (typeof msg.data !== "string") return
