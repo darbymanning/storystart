@@ -1,7 +1,6 @@
-import { integer, jsonb, pgTable } from "drizzle-orm/pg-core"
-import type { Components } from "../api"
+import { integer, pgTable, text } from "drizzle-orm/pg-core"
 
 export const spaces = pgTable("spaces", {
   id: integer().primaryKey(),
-  content: jsonb().notNull().$type<Components>(),
+  content: text().notNull(),
 })

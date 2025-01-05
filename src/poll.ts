@@ -29,7 +29,7 @@ const server = Bun.serve<{
           .limit(1)
       )[0]
 
-      let previous_components: string = JSON.stringify(query?.content || "")
+      let previous_components: string = query?.content || ""
 
       async function generate() {
         const result = await api.get_components(space_id, init)
@@ -38,10 +38,11 @@ const server = Bun.serve<{
           // compare new data with previous components
           if (JSON.stringify(content) === previous_components) return
 
+          const stringified = JSON.stringify(content)
           await db
             .insert(spaces)
-            .values({ id: Number(space_id), content })
-            .onConflictDoUpdate({ target: spaces.id, set: { content: content } })
+            .values({ id: Number(space_id), content: stringified })
+            .onConflictDoUpdate({ target: spaces.id, set: { content: stringified } })
 
           // update previous components
           previous_components = JSON.stringify(content)
